@@ -48,3 +48,17 @@ export const signUp = async(req, res) =>{
         console.error(err)
     }
 }
+
+// 整個驗證的流程:
+// 1. 伺服器端在收到登入請求後驗證使用者
+// 2. 伺服器端產生和回傳一組帶有資訊，且僅能在伺服器端被驗證的 Token
+// 3. Token 被回傳後，存取在「客戶端」（大多存在瀏覽器的 Storage 當中）
+// 4. 往後客戶端向伺服器端發送請求時，皆附帶此 Token 讓伺服器端驗證
+// 5. 若伺服器端在請求中沒有找到 Token，回傳錯誤；若有找到 Token 則驗證
+
+
+// jwt.sign(payload, secretOrPrivateKey, [options, callback])
+// payload => 要新增項目
+// secretOrPrivateKey => 自訂密鑰
+// options => expiresIn => 設定 Token 多久後會過期
+// jwt.sign( { email: result.email, id: result._id }, secret, { expiresIn: "1h" } );
