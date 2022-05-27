@@ -10,7 +10,12 @@ import {
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { useDispatch } from 'react-redux';
 import { GoogleLogin } from 'react-google-login';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+
+import {
+  signin,
+  signup,
+} from '../../redux/actions/auth';
 
 import useStyles from './styles';
 import Input from './input';
@@ -27,22 +32,24 @@ function Auth() {
   const dispatch = useDispatch();
   const [isSignup, setIsSignup] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const history = useHistory();
+  const history = useNavigate();
+  const [form, setForm] = useState(initialState);
 
   const classes = useStyles();
 
-  // const handleChange = (e) => {
-  //   setForm({ ...form, [e.target.name]: e.target.value });
-  // };
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+    // e.targer.name, 會抓tag裡面name的屬性
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // if (isSignup) {
-    //   dispatch(signup(form, history));
-    // } else {
-    //   dispatch(signin(form, history));
-    // }
+    if (isSignup) {
+      dispatch(signup(form, history));
+    } else {
+      dispatch(signin(form, history));
+    }
   };
 
   // 顯示密碼
